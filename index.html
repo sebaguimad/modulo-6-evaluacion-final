@@ -20,7 +20,18 @@
       <button type="submit">Agregar mascota</button>
     </form>
 
-    <button id="mostrarMascotas">Mostrar mascotas</button>
+    <label for="buscarMascota">Buscar mascota por nombre:</label>
+    <input type="text" id="buscarMascota" name="buscarMascota">
+    <button id="buscarBtn">Buscar</button>
+    <br>
+    <br>
+    <label for="buscarPropietario">Buscar mascota por propietario:</label>
+    <input type="text" id="buscarPropietario" name="buscarPropietario">
+    <button id="buscarPropietarioBtn">Buscar</button>
+    <br>
+    <button id="cargarMascotasBtn">Mostrar listado de mascotas</button>
+
+
 
     <ul id="listaMascotas"></ul>
 
@@ -29,24 +40,85 @@
       const form = document.querySelector("#nuevaMascota");
       const lista = document.querySelector("#listaMascotas");
       const mostrarMascotasBtn = document.querySelector("#mostrarMascotas");
+      let mascotas = []; // <- variable para almacenar la lista de mascotas
 
       // Función para cargar la lista de mascotas desde el servidor
       function cargarMascotas() {
-        axios.get("http://localhost:3000/mascotas").then((response) => {
-            const mascotas = response.data.data;
+        axios.get("http://localhost:3000/mascotas")
+          .then((response) => {
+            mascotas = response.data.data.mascotas; // <- asignar la lista de mascotas a la variable global
             lista.innerHTML = "";
 
             if (Array.isArray(mascotas)) {
-                mascotas.forEach((mascota) => {
-                    const item = document.createElement("li");
-                    item.innerText = `${mascota.nombre} (${mascota.propietario.nombre})`;
-                    lista.appendChild(item);
-                });
+              mascotas.forEach((mascota) => {
+                const item = document.createElement("li");
+                item.innerText = `${mascota.nombre} (${mascota.propietario.nombre})`;
+                lista.appendChild(item);
+              });
             } else {
-            console.error("La respuesta del servidor no contiene un arreglo de mascotas.");
+              console.error("La respuesta del servidor no contiene un arreglo de mascotas.");
             }
+          })
+          .catch((error) => {
+            console.error("Error al cargar la lista de mascotas: ", error);
           });
       }
+
+
+      const cargarMascotasBtn = document.querySelector("#cargarMascotasBtn");
+      cargarMascotasBtn.addEventListener("click", () => {
+        cargarMascotas();
+      });
+
+
+
+     // Agregar evento al botón para buscar mascotas por nombre
+     const buscarBtn = document.querySelector("#buscarBtn");
+     buscarBtn.addEventListener("click", () => {
+      const nombreMascota = document.querySelector("#buscarMascota").value;
+      const mascotasFiltradas = mascotas.filter((mascota) =>
+      mascota.nombre.toLowerCase().includes(nombreMascota.toLowerCase())
+    );
+
+  lista.innerHTML = "";
+
+  if (Array.isArray(mascotasFiltradas)) {
+    mascotasFiltradas.forEach((mascota) => {
+      const item = document.createElement("li");
+      item.innerText = `${mascota.nombre} (${mascota.propietario.nombre})`;
+      lista.appendChild(item);
+    });
+  } else {
+    console.error("No se encontraron mascotas con ese nombre.");
+  }
+});
+
+
+// Agregar evento al botón para buscar mascotas por nombre del propietario
+const buscarPropietarioBtn = document.querySelector("#buscarPropietarioBtn");
+buscarPropietarioBtn.addEventListener("click", () => {
+  const nombrePropietario = document.querySelector("#buscarPropietario").value;
+
+  const mascotasFiltradas = mascotas.filter((mascota) =>
+    mascota.propietario.nombre.toLowerCase().includes(nombrePropietario.toLowerCase())
+  );
+
+  lista.innerHTML = "";
+
+  if (Array.isArray(mascotasFiltradas)) {
+    mascotasFiltradas.forEach((mascota) => {
+      const item = document.createElement("li");
+      item.innerText = `${mascota.nombre} (${mascota.propietario.nombre})`;
+      lista.appendChild(item);
+    });
+  } else {
+    console.error("No se encontraron mascotas con ese nombre de propietario.");
+  }
+});
+
+
+
+
 
 
       // Cargar lista de mascotas al cargar la página
@@ -72,6 +144,7 @@
           })
           .catch((error) => {
             console.error(error.response.data.message);
+            alert("Debe enviar todos los datos requeridos [nombre mascota, run, nombre propietario]");
           });
       });
 

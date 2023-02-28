@@ -71,6 +71,46 @@
                 "run": "6396969",
                 "nombre": "dani"
             }
+        },
+        {
+            "id": "0993e9",
+            "nombre": "asdd",
+            "propietario": {
+                "run": "18",
+                "nombre": "asdsads"
+            }
+        },
+        {
+            "id": "d07898",
+            "nombre": "rocky",
+            "propietario": {
+                "run": "19191969",
+                "nombre": "dan"
+            }
+        },
+        {
+            "id": "a3533e",
+            "nombre": "132",
+            "propietario": {
+                "run": "1321",
+                "nombre": "312312"
+            }
+        },
+        {
+            "id": "52d961",
+            "nombre": "cosmo",
+            "propietario": {
+                "run": "69696",
+                "nombre": "ceci"
+            }
+        },
+        {
+            "id": "b509c4",
+            "nombre": "copito",
+            "propietario": {
+                "run": "69696969-9",
+                "nombre": "miguel"
+            }
         }
     ]
 }
