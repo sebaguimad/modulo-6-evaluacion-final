@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lista de Mascotas</title>
+  </head>
+  <body>
+    <h1>Lista de Mascotas</h1>
+
+    <form id="nuevaMascota">
+      <label for="nombreMascota">Nombre de la mascota:</label>
+      <input type="text" id="nombreMascota" name="nombreMascota" /><br />
+
+      <label for="runPropietario">RUN del propietario:</label>
+      <input type="text" id="runPropietario" name="runPropietario" /><br />
+
+      <label for="nombrePropietario">Nombre del propietario:</label>
+      <input type="text" id="nombrePropietario" name="nombrePropietario" /><br />
+
+      <button type="submit">Agregar mascota</button>
+    </form>
+
+    <button id="mostrarMascotas">Mostrar mascotas</button>
+
+    <ul id="listaMascotas"></ul>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      const form = document.querySelector("#nuevaMascota");
+      const lista = document.querySelector("#listaMascotas");
+      const mostrarMascotasBtn = document.querySelector("#mostrarMascotas");
+
+      // Función para cargar la lista de mascotas desde el servidor
+      function cargarMascotas() {
+        axios.get("http://localhost:3000/mascotas").then((response) => {
+            const mascotas = response.data.data;
+            lista.innerHTML = "";
+
+            if (Array.isArray(mascotas)) {
+                mascotas.forEach((mascota) => {
+                    const item = document.createElement("li");
+                    item.innerText = `${mascota.nombre} (${mascota.propietario.nombre})`;
+                    lista.appendChild(item);
+                });
+            } else {
+            console.error("La respuesta del servidor no contiene un arreglo de mascotas.");
+            }
+          });
+      }
+
+
+      // Cargar lista de mascotas al cargar la página
+      cargarMascotas();
+
+      // Manejar el evento submit del formulario para agregar una mascota
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const nombreMascota = document.querySelector("#nombreMascota").value;
+        const runPropietario = document.querySelector("#runPropietario").value;
+        const nombrePropietario = document.querySelector("#nombrePropietario").value;
+
+        axios
+          .post("http://localhost:3000/mascotas", {
+            mascota: nombreMascota,
+            run: runPropietario,
+            propietario: nombrePropietario,
+          })
+          .then((response) => {
+            console.log(response.data.message);
+            cargarMascotas();
+          })
+          .catch((error) => {
+            console.error(error.response.data.message);
+          });
+      });
+
+      // Añadir evento al botón para mostrar mascotas
+      mostrarMascotasBtn.addEventListener("click", () => {
+        cargarMascotas();
+      });
+    </script>
+  </body>
+</html>
