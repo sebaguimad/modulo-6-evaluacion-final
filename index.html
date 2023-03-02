@@ -19,7 +19,7 @@
 
       <button type="submit">Agregar mascota</button>
     </form>
-
+    <br>
     <label for="buscarMascota">Buscar mascota por nombre:</label>
     <input type="text" id="buscarMascota" name="buscarMascota">
     <button id="buscarBtn">Buscar</button>
@@ -29,13 +29,28 @@
     <input type="text" id="buscarPropietario" name="buscarPropietario">
     <button id="buscarPropietarioBtn">Buscar</button>
     <br>
+
+    <br>
+    <br>
+    <form>
+      <label for="buscarId">Buscar por ID:</label>
+      <input type="text" id="buscarId" name="buscarId">
+      <button type="button" id="buscarIdBtn">Buscar</button>
+    </form>
+    <br>
+    <form>
+      <label for="buscarId">Buscar por RUN:</label>
+      <input type="text" id="buscarRun" name="buscarId">
+      <button type="button" id="buscarRunBtn">Buscar</button>
+    </form>       
+    <br>
     <br>
     <label for="borrarMascota">Borrar por Nombre de la mascota:</label>
     <input type="text" id="borrarMascota" name="borrarMascota"><br>
     <button id="borrarBtn">Borrar mascota</button>
     <br>
     <label for="borrarPropietario">Borrar mascotas por RUN de propietario:</label>
-    <input type="text" id="borrarPropietario" name="borrarPropietario" placeholder="RUN del propietario">
+    <input type="text" id="borrarPropietario" name="borrarPropietario">
     <br>
     <button id="borrarPorPropietarioBtn">Borrar mascotas por RUN de propietario</button>
     <br>
@@ -66,6 +81,9 @@
 
         // Agregar fila de encabezado de columna
         const headerRow = document.createElement("tr");
+        const headerId = document.createElement("th");
+        headerId.innerText = "ID";
+        headerRow.appendChild(headerId);
         const headerNombre = document.createElement("th");
         headerNombre.innerText = "Nombre";
         headerRow.appendChild(headerNombre);
@@ -79,6 +97,10 @@
 
         mascotas.forEach((mascota) => {
           const row = document.createElement("tr");
+
+          const idColumn = document.createElement("td");
+          idColumn.innerText = mascota.id;
+          row.appendChild(idColumn);
 
           const nombreColumn = document.createElement("td");
           nombreColumn.innerText = mascota.nombre;
@@ -127,13 +149,58 @@
   if (Array.isArray(mascotasFiltradas)) {
     mascotasFiltradas.forEach((mascota) => {
       const item = document.createElement("li");
-      item.innerText = `${mascota.nombre} (${mascota.propietario.nombre})`;
+      item.innerText = `${mascota.id}, ${mascota.nombre}, ${mascota.propietario.nombre}, ${mascota.propietario.run}`;
       lista.appendChild(item);
     });
   } else {
     console.error("No se encontraron mascotas con ese nombre.");
   }
 });
+
+// Agregar evento al botón para buscar mascotas por id:
+const buscarIdBtn = document.querySelector("#buscarIdBtn");
+buscarIdBtn.addEventListener("click", () => {
+  const idMascota = document.querySelector("#buscarId").value;
+  const mascotaEncontrada = mascotas.find((mascota) =>
+    mascota.id === idMascota
+  );
+
+  lista.innerHTML = "";
+
+  if (mascotaEncontrada) {
+    const item = document.createElement("li");
+    item.innerText = `${mascotaEncontrada.id}, ${mascotaEncontrada.nombre}, ${mascotaEncontrada.propietario.nombre}, ${mascotaEncontrada.propietario.run}`;
+    lista.appendChild(item);
+  } else {
+    console.error("No se encontró una mascota con ese ID.");
+  }
+});
+
+// Agregar evento al botón para buscar mascotas por RUN:
+const buscarRunBtn = document.querySelector("#buscarRunBtn");
+buscarRunBtn.addEventListener("click", () => {
+  const runPropietario = document.querySelector("#buscarRun").value;
+  const mascotasEncontradas = mascotas.filter((mascota) =>
+    mascota.propietario.run.includes(runPropietario)
+  );
+
+  lista.innerHTML = "";
+
+  if (mascotasEncontradas.length > 0) {
+    mascotasEncontradas.forEach((mascota) => {
+      const item = document.createElement("li");
+      item.innerText = `${mascota.id}, ${mascota.nombre}, ${mascota.propietario.nombre}, ${mascota.propietario.run}`;
+      lista.appendChild(item);
+    });
+  } else {
+    console.error("No se encontraron mascotas con ese RUN de propietario.");
+  }
+});
+
+
+
+
+
 
 
 // Agregar evento al botón para buscar mascotas por nombre del propietario
@@ -150,7 +217,7 @@ buscarPropietarioBtn.addEventListener("click", () => {
   if (Array.isArray(mascotasFiltradas)) {
     mascotasFiltradas.forEach((mascota) => {
       const item = document.createElement("li");
-      item.innerText = `${mascota.nombre} (${mascota.propietario.nombre})`;
+      item.innerText = `${mascota.id}, ${mascota.nombre}, ${mascota.propietario.nombre}, ${mascota.propietario.run}`;
       lista.appendChild(item);
     });
   } else {

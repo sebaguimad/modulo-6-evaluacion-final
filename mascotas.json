@@ -1,14 +1,6 @@
 {
     "mascotas": [
         {
-            "id": "bbfe6a",
-            "nombre": "ppupito",
-            "propietario": {
-                "run": "198189198",
-                "nombre": "cami"
-            }
-        },
-        {
             "id": "e68cec",
             "nombre": "pupi",
             "propietario": {
@@ -54,6 +46,14 @@
             "propietario": {
                 "run": "1919191919",
                 "nombre": "betty"
+            }
+        },
+        {
+            "id": "3e8ec1",
+            "nombre": "copito",
+            "propietario": {
+                "run": "6969696969",
+                "nombre": "sebas"
             }
         }
     ]
