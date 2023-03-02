@@ -19,6 +19,6 @@ RUN: es la identificación del propietario
 
 Con lo anterior se consume el servicio WEB.
 
-URL repositorio: https://github.com/sebaguimad/Evaluacion-modulo-6
+URL repositorio: https://github.com/sebaguimad/modulo-6-evaluacion-final
 
-URL de la página github: https://sebaguimad.github.io/Evaluacion-modulo-6/
+URL de la página github: https://sebaguimad.github.io/modulo-6-evaluacion-final/
