@@ -5,7 +5,9 @@ OBJETIVOS: El objetivo de la aplicación es crear una base de datos que almacena
 Entonces, al presionar el botón Agregar mascotas, se va alimentando el servicio web.
 Y muestra en la misma página el listado de mascotas, consta de tres botones, uno para buscar por nombre de mascota
 y otro para buscar por nombre del dueño de la mascota. El tercer botón "Mostrar listado de mascotas" es para volver
-a mostrar el listado de mascotas, con lo anterior se consume el servicio WEB.
+a mostrar el listado de mascotas, además, se programaron dos botones para borrar del archivo json por nombre de mascota y por run del propietario. Y se muestran en una tabla de tres columnas: Nombre, Propietario, RUN.
+
+Con lo anterior se consume el servicio WEB.
 
 URL repositorio: https://github.com/sebaguimad/Evaluacion-modulo-6
 URL de la página github: https://sebaguimad.github.io/Evaluacion-modulo-6/
